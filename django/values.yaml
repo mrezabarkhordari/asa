@@ -1,0 +1,28 @@
+replicaCount: 1
+namespace: apps
+
+image:
+  repository: mrezabarkhordari/django
+  tag: "v3"
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8000
+
+postgresql:
+  host: app-db-postgresql.db.svc.cluster.local
+  port: 5432
+  database: postgres
+  postgresSecret: app-postgres-secret
+    #  username: postgres
+    #  password: asa@1234
+
+resources:
+  limits:
+    memory: 512Mi
+    cpu: 500m
+  requests:
+    memory: 256Mi
+    cpu: 250m
+

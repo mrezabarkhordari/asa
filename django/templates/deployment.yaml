@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-django
+  namespace: {{ .Values.namespace | default "default" }}
+  labels:
+    app: django
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: django
+  template:
+    metadata:
+      labels:
+        app: django
+    spec:
+      containers:
+      - name: django
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        env:
+        - name: POSTGRES_HOST
+          value: {{ .Values.postgresql.host }}
+        - name: POSTGRES_PORT
+          value: "{{ .Values.postgresql.port }}"
+        - name: POSTGRES_DB
+          value: {{ .Values.postgresql.database }}
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.postgresql.postgresSecret | default "default-secret" }}
+              key: username
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.postgresql.postgresSecret | default "default-secret" }}
+              key: password
+        ports:
+        - containerPort: 8000
