@@ -13,7 +13,7 @@ service:
 postgresql:
   host: app-db-postgresql.db.svc.cluster.local
   port: 5432
-  database: asadb
+  database: postgres
   postgresSecret: app-postgres-secret
     #  username: postgres
     #  password: asa@1234
