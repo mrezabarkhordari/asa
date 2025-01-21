@@ -14,13 +14,6 @@ postgresql:
   password: "asa123"
 
 # Django environment settings
-env:
-  djangoSecretKey: "asa@1234"
-  debug: "True"
-    #djangoAdminUsername: asa123
-    #djangoAdminPassword: asa123
-    #djangoAdminEmail: a@c.com
-  django_allowed_host: "django.mimreza.ir,localhost,127.0.0.1"
 
 ingress: 
   host: django.mimreza.ir 
