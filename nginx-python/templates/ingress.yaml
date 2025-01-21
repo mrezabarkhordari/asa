@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: django-ingress
+  namespace: {{ .Release.Namespace }}
+    #annotations:
+    #    cert-manager.io/issuer: letsencrypt-prod
+    #    cert-manager.io/acme-challenge-type: http01
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: {{ .Values.ingress.host }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Values.djangoapp.fullname }}
+                port:
+                  number: 80
+                  #  tls:
+                  #    - hosts:
+                  #        - {{ .Values.ingress.host }}
+                  #      secretName: {{ .Values.ingress.tlsSecretName }}
+

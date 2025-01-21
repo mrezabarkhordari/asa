@@ -1,0 +1,29 @@
+# values.yaml
+
+# Docker image and version
+image:
+  repository: mrezabarkhordari/django-app
+  tag: v30
+
+# PostgreSQL connection details
+postgresql:
+  host: "postgresql"  #Replace with actual service name in the db namespace
+  port: 5432
+  database: "django"
+  user: "asa123"
+  password: "asa123"
+
+# Django environment settings
+env:
+  djangoSecretKey: "asa@1234"
+  debug: "True"
+    #djangoAdminUsername: asa123
+    #djangoAdminPassword: asa123
+    #djangoAdminEmail: a@c.com
+  django_allowed_host: "django.mimreza.ir,localhost,127.0.0.1"
+
+ingress: 
+  host: django.mimreza.ir 
+
+djangoapp:
+  fullname: djangoapp

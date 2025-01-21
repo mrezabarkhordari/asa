@@ -1,0 +1,13 @@
+apiVersion: crd.projectcalico.org/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-ingress-from-ingress-nginx
+  namespace: apps
+spec:
+  selector: all()  # Apply to all pods in the namespace
+  types:
+    - Ingress
+  ingress:
+    - action: Allow
+      source:
+        namespaceSelector: "name == 'ingress-nginx'" 

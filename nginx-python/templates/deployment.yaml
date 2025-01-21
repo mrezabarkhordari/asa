@@ -1,0 +1,44 @@
+# templates/deployment.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: django-app
+  labels:
+    app: django-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: django-app
+  template:
+    metadata:
+      labels:
+        app: django-app
+    spec:
+      containers:
+        - name: django-app
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+            #command: [ "sh", "-c", "python django-app/manage.py migrate && python django-app/manage.py runserver 0.0.0.0:8000 && python django-app/createsuperuser --no-input " ]
+          env:
+            - name: ALLOWED_HOSTS
+              value: "{{ .Values.env.django_allowed_host }}"
+            - name: DJANGO_ADMIN_EMAIL
+              value: "{{ .Values.env.djangoAdminEmail }}"
+            - name: SECRET_KEY
+              value: "{{ .Values.env.djangoSecretKey }}"
+            - name: DEBUG
+              value: "{{ .Values.env.debug }}"
+            - name: POSTGRES_HOST
+              value: "{{ .Values.postgresql.host }}"
+            - name: POSTGRES_PORT
+              value: "{{ .Values.postgresql.port }}"
+            - name: POSTGRES_DB
+              value: "{{ .Values.postgresql.database }}"
+            - name: POSTGRES_USER
+              value: "{{ .Values.postgresql.user }}"
+            - name: POSTGRES_PASSWORD
+              value: "{{ .Values.postgresql.password }}"
+          ports:
+            - containerPort: 8000
+

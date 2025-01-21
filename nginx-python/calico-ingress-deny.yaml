@@ -1,0 +1,11 @@
+apiVersion: crd.projectcalico.org/v1
+kind: NetworkPolicy
+metadata:
+  name: deny-ingress-apps-namespace
+  namespace: apps
+spec:
+  selector: all()  # Apply to all pods in the namespace
+  types:
+    - Ingress
+  ingress:
+    - action: Deny  # Deny all ingress traffic
